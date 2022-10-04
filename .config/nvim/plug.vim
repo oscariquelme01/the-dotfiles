@@ -48,7 +48,7 @@ Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 
 " Language specifics
-Plug 'untitled-ai/jupyter_ascending.vim' " jupyter notebooks
+Plug 'luk400/vim-jukit' " jupyter notebooks
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' } " markdown
 
 call plug#end()
