@@ -9,6 +9,7 @@ This repo is intended to keep track of the different configs for most of the pro
 - Alacritty
 - Wezterm
 - Zsh
+- Obsidian
 
 Each of the programs listed above will have its corresponding README.md inside the folder explaining most of the config 
 
@@ -25,7 +26,7 @@ Examples:
 
 ## Instalation
 ```bash
-git clone https://github.com/oscariquelme01/the-dotfiles.git ~/Dotfiles && ./install.sh 
+git clone https://github.com/oscariquelme01/the-dotfiles.git ~/Dotfiles && ~/Dotfiles/install.sh 
 ```
 
 > Note: The install.sh will install all the programs using arch linux's package manager (pacman) so it won't work for any non-arch based distros. However, you can make the symlinks manually or using the following script:
