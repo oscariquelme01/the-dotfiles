@@ -39,5 +39,5 @@ ln -sf ~/Dotfiles/awesome ~/.config/awesome
 ln -sf ~/Dotfiles/zsh ~/.config/zsh
 ln -sf ~/Dotfiles/wezterm ~/.config/wezterm
 ln -sf ~/Dotfiles/alacritty ~/.config/alacritty
-ln -sf ~/Dotfiles/obsidian ~/.config/obsidian
+ln -sf ~/Dotfiles/obsidian/.obsidian.vimrc ~/.config/.obsidian.vimrc
 ```
