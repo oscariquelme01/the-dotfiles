@@ -1,9 +1,17 @@
-return
-{
-  "EdenEast/nightfox.nvim",
+return {
+  'EdenEast/nightfox.nvim',
   lazy = false,
   priority = 1000,
-  config = function(plugin)
-    vim.cmd([[colorscheme carbonfox]])
-  end
+  config = function()
+    require('nightfox').setup({
+      specs = {
+        carbonfox = {
+          diag_bg = {
+            error = '#000000',
+          }
+        }
+      }
+    })
+    vim.cmd [[colorscheme carbonfox]]
+  end,
 }

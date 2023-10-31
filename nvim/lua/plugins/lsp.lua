@@ -35,7 +35,7 @@ end
 function on_attach(_, bufnr)
   local keymap = vim.keymap.set
 
-  keymap('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
+  keymap('n', '<leader>ra', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
   keymap('n', '<leader>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
   keymap('n', 'gd', vim.lsp.buf.definition, { desc = '[G]oto [D]efinition' })
   keymap('n', 'gr', require('telescope.builtin').lsp_references, { desc = '[G]oto [R]eferences' })
@@ -52,10 +52,6 @@ function on_attach(_, bufnr)
   keymap('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
     { desc = '[W]orkspace [L]ist Folders' })
 
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
 end
 
 return {
@@ -81,12 +77,22 @@ return {
 
     -- configure diagnostics (should this be here?)
     vim.diagnostic.config({
-      underline = false
+      underline = true,
+      virtual_text = false,
+      float = {
+        show_header = true,
+        source = 'if_many',
+        focusable = false
+      }
     })
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+    -- disable formatting in favour of a standalone formatter
+    capabilities.documentFormattingProvider = false
+    capabilities.documentRangeFormattingProvider = false
 
     -- This is ugly, will make it better someday
     require 'lspconfig'.volar.setup {

@@ -39,7 +39,7 @@ globalkeys = gears.table.join(
     ),
 
     -- Open terminal
-    awful.key({ modkey, }, "Return", function () awful.spawn(terminal .. ' start --always-new-process') end,
+    awful.key({ modkey, }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
 
     -- Restart awesome

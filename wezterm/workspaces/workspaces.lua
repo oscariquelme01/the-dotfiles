@@ -29,9 +29,7 @@ local function createPanes(tab, panes, initialSize)
   local initialRows = initialSize.rows
   local firstPane = tab:panes()[1]
 
-  -- Special case
   if #panes == 1 then
-    firstPane:send_text('cd ' .. panes[1].cwd .. ' && clear\n')
     return
   end
 
@@ -42,29 +40,24 @@ local function createPanes(tab, panes, initialSize)
     local direction, size
     if paneInfo.left == nextPaneInfo.left then
       direction = 'Bottom'
-      size = paneInfo.height / initialRows
+      size = paneInfo.width / initialCols
     else
       direction = 'Right'
-      size = paneInfo.width / initialCols
+      size = paneInfo.height / initialRows
     end
 
     if paneIndex == 1 then
-      nextPane = firstPane:split { cwd = nextPaneInfo.cwd, direction = direction, size = size }
-      firstPane:send_text('cd ' .. paneInfo.cwd .. ' && clear\n') -- hacky way to change directory for the first pane. Hopefully something better comes out
+      nextPane = firstPane:split { cwd = paneInfo.cwd, direction = direction, size = size }
     else
-      nextPane = nextPane:split { cwd = nextPaneInfo.cwd, direction = direction, size = size }
+      nextPane = nextPane:split { cwd = paneInfo.cwd, direction = direction, size = size }
     end
   end
-
-  firstPane:activate()
 end
 
 -- transforms an object representing the workspaces into actual workspaces
-local function createWorkspaces(data)
-  local initialSize = data.size
-  local workspaces = data.workspaces
-
+local function createWorkspaces(workspaces, initialSize)
   for _, workspace in ipairs(workspaces) do
+
     local firstTab, _, window = mux.spawn_window {
       workspace = workspace.label
     }
@@ -84,9 +77,9 @@ local function createWorkspaces(data)
   end
 end
 
-function module.loadWorkspaces()
-  local data = loadWorkspacesData()
-  createWorkspaces(data)
+function module.loadWorkspaces(initialSize)
+  local workspaces = loadWorkspacesData()
+  createWorkspaces(workspaces, initialSize)
 end
 
 local function formatPanes(panes)
@@ -97,7 +90,9 @@ local function formatPanes(panes)
     ret[paneIndex].width = pane.width
     ret[paneIndex].top = pane.top
     ret[paneIndex].left = pane.left
-    ret[paneIndex].cwd = pane.pane:get_current_working_dir().path
+    local url = pane.pane:get_current_working_dir()
+    local cwd = wezterm.url.parse(url).path
+    ret[paneIndex].cwd = cwd
   end
 
   return ret
@@ -123,20 +118,16 @@ local function writeWorkspacesToJSON(workspaces)
 end
 
 function module.saveWorkspaces()
+  local workspaces = {} -- object to represent all the workspaces
+
   local windows = mux.all_windows()
-  local size = windows[1]:active_tab():get_size()
-
-  local jsonObject = { workspaces = {} } -- object to represent all the workspaces
-  jsonObject.size = size
-  local workspaces = jsonObject.workspaces
-
   for windowIndex, window in ipairs(windows) do
     workspaces[windowIndex] = {}
     workspaces[windowIndex].label = window:get_workspace()
     local tabs = window:tabs()
     workspaces[windowIndex].tabs = formatTabs(tabs)
   end
-  writeWorkspacesToJSON(jsonObject)
+  writeWorkspacesToJSON(workspaces)
 end
 
 return module

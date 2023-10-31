@@ -10,10 +10,9 @@ function module.apply_to_config(config)
     { key = 'd',     mods = 'ALT',  action = wezterm.action.CloseCurrentTab { confirm = true } },
     { key = 'x',     mods = 'ALT',  action = wezterm.action.SplitVertical {} },
     { key = 'v',     mods = 'ALT',  action = wezterm.action.SplitHorizontal {} },
-    { key = 'y',     mods = 'ALT',  action = wezterm.action.SwitchToWorkspace { name = 'default', }, },
-    { key = 'u',     mods = 'ALT',  action = wezterm.action.SwitchToWorkspace { name = 'monitoring', spawn = { args = { 'top' }}}},
     { key = 'i',     mods = 'ALT',  action = wezterm.action.SwitchToWorkspace },
     { key = 's',     mods = 'ALT',  action = wezterm.action.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES'}},
+    { key = 'p',     mods = 'ALT',  action = wezterm.action.EmitEvent 'save-workspaces' },
     { key = 'w',     mods = 'ALT',  action = wezterm.action.PromptInputLine {
       description = wezterm.format {
         { Attribute = { Intensity = 'Bold' }},
@@ -49,6 +48,18 @@ function module.apply_to_config(config)
         end
       end)
     }},
+    { key = 't',     mods = 'ALT',  action = wezterm.action.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' }},
+        { Foreground = { Color = pallette.white }},
+        { Text = 'Rename current tab'}
+      },
+      action = wezterm.action_callback(function (_, pane, line)
+        if line then
+          pane:tab():set_title(line)
+        end
+      end)
+    }},
   }
 
   -- tab navigation
@@ -62,7 +73,6 @@ function module.apply_to_config(config)
 
   -- pane navigation
   local navigation_keybinds = require("navigation")
-  wezterm.log_info(navigation_keybinds)
 
   for _, keybind in pairs(navigation_keybinds) do
     table.insert(config.keys, keybind)

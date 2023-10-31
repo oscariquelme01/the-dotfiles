@@ -1,5 +1,5 @@
 vim.wo.number = true                   -- Make line numbers default
-vim.wo.relativenumber = true           -- Relative line numbers
+-- vim.wo.relativenumber = true           -- Relative line numbers
 vim.o.mouse = 'a'                      -- Enable mouse mode
 vim.o.clipboard = 'unnamedplus'        -- Sync clipboard between OS and Neovim.
 vim.o.breakindent = true               -- Enable break indent

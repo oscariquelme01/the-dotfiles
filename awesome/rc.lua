@@ -6,7 +6,7 @@ local beautiful = require("beautiful")
 local gears = require("gears")
 
 modkey = "Mod4"
-terminal = "wezterm"
+terminal = "alacritty"
 
 -- local theme_dir = gears.filesystem.get_configuration_dir() .. "theme/"
 -- beautiful.init(theme_dir .. "theme.lua")
@@ -57,6 +57,13 @@ clientbuttons = gears.table.join(
   end)
 )
 
+-- Control variables to track whether programs have been launched before or not
+local firefox_started = false
+local wezterm_started = false
+local obsidian_started = false
+local discord_started = 2
+local teams_started = 2
+
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
@@ -72,18 +79,58 @@ awful.rules.rules = {
     },
 
     { rule = { class = "org.wezfurlong.wezterm"},
-    properties = { tag = "1"} },
+    callback = function (c)
+            if not wezterm_started then
+                local s = awful.screen.focused()
+                c:move_to_screen(s)
+                c:tags({ s.tags[1] })
+
+                wezterm_started = true
+            end
+        end },
 
     { rule = { class = "firefox"},
-    properties = { tag = "2"} },
+    callback = function (c)
+            if not firefox_started then
+                local s = awful.screen.focused()
+                c:move_to_screen(s)
+                c:tags({ s.tags[2] })
+
+                firefox_started = true
+            end
+        end },
 
     { rule = { class = "obsidian"},
-    properties = { tag = "3"} },
+    callback = function (c)
+            if not obsidian_started then
+                local s = awful.screen.focused()
+                c:move_to_screen(s)
+                c:tags({ s.tags[3] })
+
+                obsidian_started = true
+            end
+        end },
 
     { rule = { class = "Microsoft Teams - Preview"},
-        properties = { tag = "4"} },
+    callback = function (c)
+            if teams_started ~= 0 then
+                local s = awful.screen.focused()
+                c:move_to_screen(s)
+                c:tags({ s.tags[4]})
+
+                teams_started = teams_started - 1
+            end
+        end },
 
     { rule = { class = "discord"},
-        properties = { tag = "5"} }
+    callback = function (c)
+            if discord_started ~= 0 then
+                local s = awful.screen.focused()
+                c:move_to_screen(s)
+                c:tags({ s.tags[5] })
+
+                discord_started = discord_started - 1
+            end
+        end },
 
 }

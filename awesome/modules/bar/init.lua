@@ -20,8 +20,6 @@
          local orientation
          if geometry.width > geometry.height then orientation = 'horizontal' else orientation = 'vertical' end
 
-         if orientation == 'horizontal' then gears.wallpaper.maximized('~/.config/wallpaper.png', s) end
-
          -- instantiate widgets
          s.taglist = taglist(s, orientation)
          s.clock = clock()
