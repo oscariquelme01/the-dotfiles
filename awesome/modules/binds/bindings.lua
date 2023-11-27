@@ -16,15 +16,16 @@ globalkeys = gears.table.join(
               {description = "go back", group = "tag"}),
 
     -- switch between keyboard layouts
-    awful.key({ modkey, }, "p",
+    awful.key({ modkey, }, "c",
       function ()
         awful.spawn.easy_async_with_shell("setxkbmap -query | grep layout | awk '{print $2}'", function (layout)
           layout = string.gsub(layout, '\n', '')
-          naughty.notify({text = tostring(tostring(layout))})
           if tostring(layout) == 'us' then
             awful.spawn.with_shell("setxkbmap es")
+            naughty.notify({text = 'us => es'})
           else
             awful.spawn.with_shell("setxkbmap us")
+            naughty.notify({text = 'es => us'})
           end
         end)
       end,

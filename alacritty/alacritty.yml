@@ -176,7 +176,7 @@ font:
 colors:
   # Default colors
   primary:
-    background: '#1c1e26'
+    background: '#282828'
     foreground: '#cbced0'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
@@ -186,7 +186,7 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#1c1e26'
+    black:   '#282828'
     red:     '#e93c58'
     green:   '#efaf8e'
     yellow:  '#efb993'
@@ -351,7 +351,7 @@ schemes:
   dark_horizon: &dark_horizon
      # Default colors
     primary:
-      background: '#0e0e0e'
+      background: '#161616'
       foreground: '#cbced0'
     # Colors the cursor will use if `custom_cursor_colors` is true
     cursor:

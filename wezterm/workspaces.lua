@@ -16,7 +16,7 @@ local loadWorkspacesData = function ()
 
     return workspaces
   else
-    error('No workspace json file found')
+    return
   end
 end
 
@@ -86,6 +86,9 @@ end
 
 function module.loadWorkspaces()
   local data = loadWorkspacesData()
+  if not data then
+    return
+  end
   createWorkspaces(data)
 end
 

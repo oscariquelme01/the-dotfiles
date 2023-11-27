@@ -72,7 +72,7 @@ return {
     local keymap = vim.keymap.set
 
     -- Basic debugging keymaps, feel free to change to your liking!
-    keymap('n', '<leader>dc', dap.continue, { desc = 'Debug: Start/Continue' })
+    keymap('n', '<leader>dn', dap.continue, { desc = 'Debug: Start/Continue' })
     keymap('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
     keymap('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
     keymap('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
@@ -80,6 +80,7 @@ return {
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
     keymap('n', '<leader>dt', dapui.toggle, { desc = 'Debug: See last session result.' })
+    keymap('n', '<leader>df', ':DapTerminate<CR>', { desc = 'Debug: See last session result.', silent = true })
 
     -- Dap UI setup
     dapui.setup {

@@ -10,6 +10,24 @@ return {
         },
         lua = {
           require("formatter.filetypes.lua").stylua
+        },
+        json = {
+          require("formatter.filetypes.json").jq
+        },
+        vue = {
+          require("formatter.filetypes.vue").prettier
+        },
+        typescript = {
+          require("formatter.filetypes.typescript").prettier
+        },
+        javascript = {
+          require("formatter.filetypes.javascript").prettier
+        },
+        javascriptreact = {
+          require("formatter.filetypes.javascriptreact")
+        },
+        typescriptreact = {
+          require("formatter.filetypes.typescriptreact")
         }
       }
     }

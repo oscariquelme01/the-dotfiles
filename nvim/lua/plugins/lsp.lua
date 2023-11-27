@@ -10,6 +10,7 @@ function install_servers(on_attach, capabilities)
         telemetry = { enable = false },
       },
     },
+    volar = {}
   }
 
   -- Ensure the servers above are installed
@@ -77,7 +78,7 @@ return {
 
     -- configure diagnostics (should this be here?)
     vim.diagnostic.config({
-      underline = true,
+      underline = false,
       virtual_text = false,
       float = {
         show_header = true,
@@ -95,14 +96,14 @@ return {
     capabilities.documentRangeFormattingProvider = false
 
     -- This is ugly, will make it better someday
-    require 'lspconfig'.volar.setup {
-      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-      init_options = {
-        typescript = {
-          tsdk = vim.fn.expand '~' .. '.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib'
-        }
-      }
-    }
+    -- require 'lspconfig'.volar.setup {
+    --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+    --   init_options = {
+    --     typescript = {
+    --       tsdk = vim.fn.expand '~' .. '.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib'
+    --     }
+    --   }
+    -- }
 
       install_servers(on_attach, capabilities)
     end
