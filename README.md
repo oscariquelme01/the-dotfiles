@@ -10,6 +10,7 @@ This repo is intended to keep track of the different configs for most of the pro
 - Wezterm
 - Zsh
 - Obsidian
+- Starship
 
 Each of the programs listed above will have its corresponding README.md inside the folder explaining most of the config and functionality
 
