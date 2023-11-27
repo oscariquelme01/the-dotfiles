@@ -28,5 +28,6 @@ Examples:
 
 Just run the script and hope for the best. The script is yet to be improved and tested, but at least it makes sure to create backups of your dotfiles :)
 ```bash
+git clone https://github.com/oscariquelme01/the-dotfiles.git ~/Dotfiles
 chmod +x install.sh && ./install.sh
 ```
