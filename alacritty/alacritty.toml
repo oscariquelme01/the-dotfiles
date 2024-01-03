@@ -1,0 +1,86 @@
+[[colors.indexed_colors]]
+color = "#e58d7d"
+index = 16
+
+[[colors.indexed_colors]]
+color = "#e4a382"
+index = 17
+
+[[colors.indexed_colors]]
+color = "#232530"
+index = 18
+
+[[colors.indexed_colors]]
+color = "#2e303e"
+index = 19
+
+[[colors.indexed_colors]]
+color = "#9da0a2"
+index = 20
+
+[[colors.indexed_colors]]
+color = "#dcdfe4"
+index = 21
+
+[colors.bright]
+black = "#6f6f70"
+blue = "#df5273"
+cyan = "#24a8b4"
+green = "#efaf8e"
+magenta = "#b072d1"
+red = "#e93c58"
+white = "#e3e6ee"
+yellow = "#efb993"
+
+[colors.cursor]
+cursor = "#cbced0"
+text = "#1c1e26"
+
+[colors.normal]
+black = "#161616"
+blue = "#df5273"
+cyan = "#24a8b4"
+green = "#efaf8e"
+magenta = "#b072d1"
+red = "#e93c58"
+white = "#cbced0"
+yellow = "#efb993"
+
+[colors.primary]
+background = "#161616"
+foreground = "#cbced0"
+
+[font]
+size = 14
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Space"
+mode = "~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "Space"
+mode = "Vi|~Search"
+mods = "Control"
+
+[scrolling]
+history = 10000
+multiplier = 3

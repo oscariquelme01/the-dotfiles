@@ -386,9 +386,6 @@ schemes:
       - { index: 21, color: '#dcdfe4' }
 
 
-
-# Apply
-colors: *dark_horizon
 ##################################################
 
 
