@@ -24,10 +24,10 @@ return {
           require("formatter.filetypes.javascript").prettier
         },
         javascriptreact = {
-          require("formatter.filetypes.javascriptreact")
+          require("formatter.filetypes.javascriptreact").prettier
         },
         typescriptreact = {
-          require("formatter.filetypes.typescriptreact")
+          require("formatter.filetypes.typescriptreact").prettier
         }
       }
     }
