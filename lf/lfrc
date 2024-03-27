@@ -1,0 +1,228 @@
+#  ██   ████
+# ░██  ░██░
+# ░██ ██████ ██████  █████
+# ░██░░░██░ ░░██░░█ ██░░░██
+# ░██  ░██   ░██ ░ ░██  ░░
+# ░██  ░██   ░██   ░██   ██
+# ███  ░██  ░███   ░░█████
+#░░░   ░░   ░░░     ░░░░░
+
+# To get image previews, you need these 4 steps:
+# 1. Install ueberzug
+# 2. The previewer file (~/.config/lf/previewer for me), must have a command
+#    similar to mine to generate ueberzug images.
+# 3. A `set cleaner` line as below is a cleaner script.
+# 4. lf should be started through a wrapper script (~/.local/bin/lfub for me)
+#    that creates the environment for ueberzug. This command can be be aliased
+#    in your shellrc (`alias lf="lfub").
+
+# Main options
+set icons
+set period 1
+#set relativenumber
+#set number
+set hidden!
+set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set cleaner '~/.config/lf/cleaner'
+set previewer '~/.config/lf/previewer'
+
+# Set and style borders around the columns
+# Use 38;5;{index} to use a 256 term color located at index [0-255] for the foreground
+# Use 48;5;{index} to use a 256 term color located at index [0-255] for the background
+set drawbox true
+set borderfmt "\033[38;5;245m\033[0m"
+
+# Format prompt to powerline with a powerline view of the pwd and file
+set promptfmt "
+\033[38;2;35;38;39;48;2;202;31;31m
+\033[38;2;202;31;31;48;2;40;47;62m
+\033[38;2;255;255;255m %w 
+\033[38;2;40;47;62;48;2;58;67;89m
+\033[38;2;255;255;255m %f 
+\033[;38;2;58;67;89;49m\033[m"
+
+# Automatically update and jump to results when searching
+set incsearch
+set incfilter
+
+# ratios for the columns
+set ratios 2:3:4 # 2:3:7:7
+
+# which character to show when something is overflowing
+set truncatechar "…"
+
+# set waitmsg "\033[1;31m⏎\033[m"
+# Time stuff
+set timefmt "02/01/2006 15:04:05 "
+set infotimefmtnew '02/01 15:04'
+set infotimefmtold '02/01/06'
+
+# TODO: this should use term256 colors
+set errorfmt "\033[1;31m"
+set numberfmt "\033[38;2;75;87;116m"
+
+# Scrolling stuff
+set tabstop 2
+set scrolloff 5
+set wrapscroll
+
+# Stuff I don't really understand
+# set shellopts '-eu'
+# set ifs "\n"
+# set shell "bash"
+
+# bottom right corner stuff
+set rulerfmt "
+\033[38;5;2;48;5;0m%m
+\033[38;5;2;48;5;0m%c
+\033[38;5;2;48;5;0m%d
+\033[m"
+
+# Cursor preview
+set cursorpreviewfmt "\033[7m"
+
+source '~/.config/lf/opener'
+
+%test $LF_LEVEL -eq 1 || >&2 printf "Warning: You're in a nested lf instance!"
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd trash %trash-put $fx
+
+cmd new ${{
+    printf "New file/directory name: "
+    read -r NAME
+    last_char="${NAME: -1}"
+    # Check if the last character is a forward slash
+    if [ "$last_char" = "/" ]; then
+	mkdir "$NAME"
+    else
+	touch "$NAME"
+    fi
+}}
+
+# Jump to fzf results
+cmd fzf_jump ${{
+    res="$(find . -maxdepth 4 | fzf --reverse --header='Jump to location')"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf -- "%s\n" $fx | sed 's|'"$HOME"'||'
+	printf "\t\033[1;33mRemove? \033[37m[\033[32ms\033[37m/\033[31mN\033[37m]\033[m "
+	read -r REPLY
+	case "$REPLY" in
+		[yYsS]) rm -rf -- $fx ;;
+	esac
+}}
+
+
+cmd chmodx &{{
+	chmod u+x $fx
+	lf -remote "send $id reload"
+}}
+
+
+
+# cmd extract ${{
+# 	clear; tput cup $(($(tput lines)/3)); tput bold
+# 	set -f
+# 	printf -- "%s\n" $fx
+# 	printf "\t\033[1;34m¿Extraer? \033[37m[\033[32ms\033[37m/\033[31mN\033[37m]\033[m "
+# 	read -r REPLY
+# 	case "$REPLY" in
+# 		[yYsS]) aunpack $fx ;;
+# 	esac
+# }}
+
+
+# cmd moveto ${{
+# 	clear; tput cup $(($(tput lines)/3)); tput bold
+# 	set -f
+# 	clear
+# 	echo "¿A dónde mover?"
+# 	if dest="$(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' "${XDG_CONFIG_HOME:-"$HOME/.config"}/shell/bm-dirs" \
+# 			| fzf \
+# 			| sed 's|~|$HOME|'
+# 		)"
+# 	then
+# 		for x in $fx; do
+# 			eval mv -iv \"$x\" \"$dest\"
+# 		done &&cmd gsh %{{
+# 	lf -remote "send ${id} cd \"$(g.sh -x $*)\""
+# }}
+
+cmd setbg "$1"
+
+# Mapeos de teclas
+
+# File name search
+# Dependency: my 'ffd' script which uses:
+# - fd or find, fzf, tput; bat and lsd (for previews)
+map f
+map F  $lf -remote "send $id select \"$(ffd -p +m)\""
+map -  search
+map _  search-back
+map zf find
+map zF find-back
+map ff :fzf_jump
+
+# File content search
+
+# Main maps
+map Km maps  # List normal mode mappings
+map Kc cmaps  # List command mode mappings
+
+map d
+map dd cut
+map D delete
+map <a-d> trash
+map <a-D> shred
+map E extract
+#map C copyto
+#map M moveto
+map P paste_link
+map <a-r> reload
+map <enter> open
+map x $$f
+map X !$f
+map <a-x> chmodx
+map <a-X> $setbg $f
+map C &compila $f  # Compile
+map <a-c> $compila -ir $f  # Interpret/Compile and run
+map o &mimeopen $f
+map O $mimeopen --ask $f
+map U glob-unselect *
+map <a-u> glob-select *
+# Remember that 'v' toggles selections
+# TODO:
+# - recursive selection
+
+# Navigation
+map gr cd /
+map gt cd /tmp
+
+# Renaming
+map c
+map r
+map i rename  # Before extension
+map I push i<c-a>  # At the very beginning
+map A push i<a-A>  # At the very end
+map a push i<a-A><a-b>  # After extension
+map cc push i<a-A><c-u>  # New rename
+map b $vidir   # Bulkrename in $EDITOR, 'vidir' from more-utils
+
+# New forked terminal in current directory
+map W &{ nohup "${TERMINAL:-alacritty}" >/dev/null 2>&1& }
+
+# Copy selected file names
+map Y $printf "%s" "$fx" | xclip -selection clipboard

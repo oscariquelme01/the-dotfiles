@@ -7,7 +7,7 @@ if [ "$needInstall" = "y" ] || [ "$needInstall" = "Y" ]; then
 	sudo pacman -S neovim awesome zsh wezterm alacritty obsidian
 fi
 
-paths=("nvim" "awesome" "zsh" "wezterm" "alacritty" "obsidian/.obsidian.vimrc" "starship.toml")
+paths=("nvim" "awesome" "zsh" "wezterm" "alacritty" "obsidian/.obsidian.vimrc" "starship.toml" "lf")
 
 for path in "${paths[@]}"; do
 	mv "$HOME/.config/${path}" "$HOME/.config/${path}.backup"
