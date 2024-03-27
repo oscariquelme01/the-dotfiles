@@ -71,6 +71,7 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
+                     floating = true,
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
@@ -79,6 +80,7 @@ awful.rules.rules = {
     },
 
     { rule = { class = "org.wezfurlong.wezterm"},
+    properties = { floating = false },
     callback = function (c)
             if not wezterm_started then
                 local s = awful.screen.focused()
@@ -90,6 +92,7 @@ awful.rules.rules = {
         end },
 
     { rule = { class = "firefox"},
+    properties = { floating = false },
     callback = function (c)
             if not firefox_started then
                 local s = awful.screen.focused()

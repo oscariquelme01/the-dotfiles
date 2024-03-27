@@ -6,6 +6,7 @@
  local utils = require("utilities.utils")
 
  local taglist = require("modules.bar.taglist")
+ local timer = require("modules.bar.timer")
  local clock = require("modules.bar.clock")
  local launcher = require("modules.bar.launcher")
  local battery = require("modules.bar.battery")
@@ -23,6 +24,7 @@
          -- instantiate widgets
          s.taglist = taglist(s, orientation)
          s.clock = clock()
+         s.timer = timer()
          if is_laptop then s.battery = battery() else s.battery = nil end
          s.launcher = launcher()
          s.menu = menu(function() s.control_pannel.toggle() end)
@@ -38,19 +40,16 @@
          if orientation == 'horizontal' then alignLayout = wibox.layout.align.vertical else alignLayout = wibox.layout.align.horizontal end
          if orientation == 'horizontal' then fixedLayout = wibox.layout.fixed.vertical else fixedLayout = wibox.layout.fixed.horizontal end
 
-         s.wibar:setup {
-             { -- Left widgets
-                s.launcher,
-                top = dpi(8),
-                left = dpi(6),
-                right = dpi(6),
-                layout = wibox.layout.margin,
-             },
-             { -- Middle widgets
-                s.taglist,
-                widget = wibox.container.margin
-             },
-             { -- Right widgets
+         local rightWidgets
+         -- if the orientation ir horizontal, include right widgets, else, don't
+         if orientation == 'horizontal' then
+             rightWidgets = { -- Right widgets
+                {
+                     s.timer,
+                     top = dpi(8),
+                     left = dpi(4),
+                     layout = wibox.layout.margin
+                 },
                 {
                      s.menu,
                      right = dpi(2),
@@ -70,7 +69,27 @@
                  },
                  layout = fixedLayout,
                  spacing = dpi(2)
+             }
+         else
+             rightWidgets = {
+                 layout = fixedLayout,
+                 spacing = dpi(2)
+             }
+         end
+
+         s.wibar:setup {
+             { -- Left widgets
+                s.launcher,
+                top = dpi(8),
+                left = dpi(6),
+                right = dpi(6),
+                layout = wibox.layout.margin,
              },
+             { -- Middle widgets
+                s.taglist,
+                widget = wibox.container.margin
+             },
+             rightWidgets,
              layout = alignLayout,
              expand = "none",
          }
