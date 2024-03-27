@@ -1,14 +1,14 @@
 format = """\
-[ 󰣇 ](bg:#7DF9AA fg:#161616)\
-[](fg:#7DF9AA bg:#1C3A5E)\
+[ 󰣇 ](bg:#E78284 fg:#161616)\
+[](fg:#E78284 bg:#666666)\
 $time\
-[](fg:#1C3A5E bg:#3B76F0)\
+[](fg:#666666 bg:#3D3D3D)\
 $directory\
-[](fg:#3B76F0 bg:#FCF392)\
+[](fg:#3D3D3D bg:#E5C890)\
 $git_branch\
 $git_status\
 $git_metrics\
-[](fg:#FCF392 bg:#161616)\
+[](fg:#E5C890 bg:#161616)\
 $character\
 """
 
@@ -22,16 +22,16 @@ disabled = true
 
 [directory]
 format = "[  $path ]($style)"
-style = "fg:#E4E4E4 bg:#3B76F0"
+style = "fg:#ffffff bg:#3D3D3D"
 
 [git_branch]
 format = '[ $symbol$branch(:$remote_branch) ]($style)'
 symbol = "  "
-style = "fg:#1C3A5E bg:#FCF392"
+style = "fg:#303446 bg:#E5C890"
 
 [git_status]
 format = '[$all_status]($style)'
-style = "fg:#1C3A5E bg:#FCF392"
+style = "fg:#303446 bg:#E5C890"
 ahead = "⇡${count} "
 diverged = "⇡${ahead_count}⇣${behind_count} "
 behind = "⇣${count} "
@@ -48,11 +48,10 @@ format = "[ 󱎫 $duration ]($style)"
 style = "fg:bright-white bg:18"
 
 [character]
-success_symbol = '[ ➜](bold green) '
-error_symbol = '[ ✗](#E84D44) '
+success_symbol = '[ ➜](#a6d189) '
+error_symbol = '[ ](#E78284) '
 
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
-style = "bg:#1d2230"
-format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
+format = '[[ 󱑍 $time ](bg:#666666 fg:#ffffff)]($style)'
