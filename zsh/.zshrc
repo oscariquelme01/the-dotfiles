@@ -108,6 +108,16 @@ source /usr/share/nvm/init-nvm.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls="lsd"
 alias v="nvim"
+alias fm="lfcd"
+
+# drop into current dir when using lf
+
+LFCD="$HOME/.config/lf/lfcd.sh"
+if [ -f "$LFCD" ]; then
+    source "$LFCD"
+fi
+bindkey -s '^o' 'lfcd\n'
+
 # alias cat='bat'
 
 # Git diff for a specific commit
