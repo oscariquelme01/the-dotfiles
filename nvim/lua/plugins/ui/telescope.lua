@@ -34,6 +34,8 @@ return {
 
     require('telescope').setup {
       defaults = {
+        layout_strategy = 'flex',
+        layout_config = { prompt_position = 'top' },
         file_ignore_patterns = { "node_modules" },
         mappings = {
           i = {

@@ -1,8 +1,5 @@
 function install_servers(on_attach, capabilities)
   local servers = {
-    sqlls = {},
-    clangd = {},
-    pyright = {},
     html = { filetypes = { 'html', 'twig', 'hbs', 'vuels' } },
     lua_ls = {
       Lua = {
@@ -10,7 +7,7 @@ function install_servers(on_attach, capabilities)
         telemetry = { enable = false },
       },
     },
-    volar = {}
+    tsserver = { implicitProjectConfiguration = { checkJs = true } },
   }
 
   -- Ensure the servers above are installed
@@ -20,6 +17,11 @@ function install_servers(on_attach, capabilities)
     ensure_installed = vim.tbl_keys(servers),
   }
 
+  -- This is so not clear that I feel it deserves a long comment
+  -- Basically setup_handlers would be called with a table as its only argument
+  -- The table keys should be the name of the lsp servers and the value should be a function containing the necessary information
+  -- (E.g: ["lua_ls"] = function(server_name) ... end)
+  -- However, if no key is provided, the handler becomes the default handler for all the lsp servers with no key passed
   mason_lspconfig.setup_handlers {
     function(server_name)
       require('lspconfig')[server_name].setup {
@@ -28,11 +30,11 @@ function install_servers(on_attach, capabilities)
         settings = servers[server_name],
         filetypes = (servers[server_name] or {}).filetypes,
       }
-    end
+    end,
   }
-
 end
 
+-- set the lsp relevant keymaps
 function on_attach(_, bufnr)
   local keymap = vim.keymap.set
 
@@ -43,16 +45,15 @@ function on_attach(_, bufnr)
   keymap('n', 'gI', require('telescope.builtin').lsp_implementations, { desc = '[G]oto [I]mplementation' })
   keymap('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'Type [D]efinition' })
   keymap('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, { desc = '[D]ocument [S]ymbols' })
-  keymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
-    { desc = '[W]orkspace [S]ymbols' })
+  keymap('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols' })
   keymap('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
   -- Lesser used LSP functionality
   keymap('n', 'gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' })
   keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = '[W]orkspace [A]dd Folder' })
   keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = '[W]orkspace [R]emove Folder' })
-  keymap('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-    { desc = '[W]orkspace [L]ist Folders' })
-
+  keymap('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, { desc = '[W]orkspace [L]ist Folders' })
 end
 
 return {
@@ -62,13 +63,13 @@ return {
     -- Automatically install LSPs to stdpath for neovim
     {
       'williamboman/mason.nvim',
-      config = true
+      config = true,
     },
     'williamboman/mason-lspconfig.nvim',
     {
       'j-hui/fidget.nvim',
       tag = 'legacy',
-      opts = {}
+      opts = {},
     },
     'folke/neodev.nvim',
   },
@@ -77,15 +78,15 @@ return {
     require('neodev').setup()
 
     -- configure diagnostics (should this be here?)
-    vim.diagnostic.config({
+    vim.diagnostic.config {
       underline = false,
       virtual_text = false,
       float = {
         show_header = true,
         source = 'if_many',
-        focusable = false
-      }
-    })
+        focusable = false,
+      },
+    }
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -95,16 +96,6 @@ return {
     capabilities.documentFormattingProvider = false
     capabilities.documentRangeFormattingProvider = false
 
-    -- This is ugly, will make it better someday
-    -- require 'lspconfig'.volar.setup {
-    --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-    --   init_options = {
-    --     typescript = {
-    --       tsdk = vim.fn.expand '~' .. '.local/share/nvim/mason/packages/typescript-language-server/node_modules/typescript/lib'
-    --     }
-    --   }
-    -- }
-
-      install_servers(on_attach, capabilities)
-    end
-  }
+    install_servers(on_attach, capabilities)
+  end,
+}

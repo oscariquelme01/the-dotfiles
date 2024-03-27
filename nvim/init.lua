@@ -1,5 +1,4 @@
 -- Set <space> as the leader key
--- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -21,7 +20,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {}
-require("lazy").setup("plugins", opts)
+require('lazy').setup({
+  { import = 'plugins.theme' },
+  { import = 'plugins.ui' },
+  { import = 'plugins.completion' },
+  { import = 'plugins.languages' },
+  { import = 'plugins.utils' },
+  { import = 'plugins.db' },
+}, opts)
 
-require("mappings")
-require("options")
+require 'mappings'
+require 'options'

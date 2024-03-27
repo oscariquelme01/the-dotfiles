@@ -10,7 +10,6 @@ vim.wo.signcolumn = 'yes'              -- Keep signcolumn on by default
 vim.o.updatetime = 250                 -- Decrease update time
 vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
-vim.o.termguicolors = true             -- Use terminal gui colors
 vim.o.splitbelow = true                -- Horizontal split below current buffer
 vim.o.splitright = true                -- Vertical split right to current buffer
 vim.o.tabstop = 4                      -- Tabstop default is 8 spaces...
