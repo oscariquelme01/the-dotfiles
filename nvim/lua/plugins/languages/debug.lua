@@ -4,7 +4,7 @@ return {
     'rcarriga/nvim-dap-ui',
     'nvim-neotest/nvim-nio',
     -- lenguage adapters
-    'mxsdev/nvim-dap-vscode-js'
+    'mxsdev/nvim-dap-vscode-js',
   },
   config = function()
     local dap = require 'dap'
@@ -56,9 +56,9 @@ return {
     }
 
     -- Create nvim command to launch debug that reads launch.json
-    vim.api.nvim_create_user_command('Debug', function ()
+    vim.api.nvim_create_user_command('Debug', function()
       -- attempt to load any .vscode/launch.json
-      local dap = require('dap')
+      local dap = require 'dap'
       require('dap.ext.vscode').load_launchjs()
 
       dap.continue()
@@ -70,9 +70,40 @@ return {
 
     -- Configure each lenguage here!!
     -- Javascript/Typescript
-    require('dap-vscode-js').setup({
-      debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",
-      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' }
-    })
-  end
+    require('dap-vscode-js').setup {
+      debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug',
+      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
+    }
+
+    -- Register configurations for javascript. In the future, if more lenguages are needed, we should move the configs to a new file dapConfigs.lua or someting like that but since I mostly work on js right now I don't care
+    local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
+
+    for _, language in ipairs(js_based_languages) do
+      dap.configurations[language] = {
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch file',
+          program = '${file}',
+          cwd = '${workspaceFolder}',
+        },
+        {
+          type = 'pwa-node',
+          request = 'attach',
+          name = 'Attach',
+          processId = require('dap.utils').pick_process,
+          cwd = '${workspaceFolder}',
+        },
+        {
+          type = 'pwa-chrome',
+          request = 'launch',
+          name = 'Start Chrome with "localhost"',
+          url = 'http://localhost:3000',
+          webRoot = '${workspaceFolder}',
+          userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
+        },
+      }
+    end
+
+  end,
 }
