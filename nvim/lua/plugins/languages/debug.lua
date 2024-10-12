@@ -1,11 +1,18 @@
 return {
   'mfussenegger/nvim-dap',
+  lazy = false,
   dependencies = {
     'rcarriga/nvim-dap-ui',
     'nvim-neotest/nvim-nio',
-    -- lenguage adapters
     'mxsdev/nvim-dap-vscode-js',
+    -- lazy spec to build "microsoft/vscode-js-debug" from source
+    {
+      'microsoft/vscode-js-debug',
+      version = '1.x',
+      build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
+    },
   },
+  cmd = 'Debug',
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
@@ -21,7 +28,6 @@ return {
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
     keymap('n', '<leader>t', dapui.toggle, { desc = 'Debug: See last session result.' })
-    keymap('n', '<leader>df', ':DapTerminate<CR>', { desc = 'Debug: See last session result.', silent = true })
 
     -- Dap UI setup
     dapui.setup {
@@ -55,26 +61,6 @@ return {
       },
     }
 
-    -- Create nvim command to launch debug that reads launch.json
-    vim.api.nvim_create_user_command('Debug', function()
-      -- attempt to load any .vscode/launch.json
-      local dap = require 'dap'
-      require('dap.ext.vscode').load_launchjs()
-
-      dap.continue()
-    end, { desc = 'Start debugging session' })
-
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Configure each lenguage here!!
-    -- Javascript/Typescript
-    require('dap-vscode-js').setup {
-      debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug',
-      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
-    }
-
     -- Register configurations for javascript. In the future, if more lenguages are needed, we should move the configs to a new file dapConfigs.lua or someting like that but since I mostly work on js right now I don't care
     local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
 
@@ -105,5 +91,30 @@ return {
       }
     end
 
+    -- Create nvim command to launch debug that reads launch.json
+    vim.api.nvim_create_user_command('Debug', function()
+      -- attempt to load any .vscode/launch.json
+      if vim.fn.filereadable '.vscode/launch.json' then
+        require('dap.ext.vscode').load_launchjs(nil, {
+          ['pwa-node'] = js_based_languages,
+          ['node'] = js_based_languages,
+          ['chrome'] = js_based_languages,
+          ['pwa-chrome'] = js_based_languages,
+        })
+      end
+
+      dap.continue()
+    end, { desc = 'Start debugging session' })
+
+    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+    -- Configure each lenguage here!!
+    -- Javascript/Typescript
+    require('dap-vscode-js').setup {
+      debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug',
+      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
+    }
   end,
 }

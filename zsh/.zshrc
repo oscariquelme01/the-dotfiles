@@ -4,8 +4,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Add .local/bin to path
-export PATH="$PATH:$HOME/.local/bin"
+# Add .local/bin to path and insomnia
+export PATH="$PATH:$HOME/.local/bin:/opt/insomnia"
 
 # Move one word forwards or backswards
 bindkey '^[0c' forward-word
@@ -139,8 +139,13 @@ alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 # POWERLINE (starship)
 eval "$(starship init zsh)"
 
+# THE FUCK
+eval $(thefuck --alias)
+
 # bun completions
 [ -s "/home/topi/.bun/_bun" ] && source "/home/topi/.bun/_bun"
+
+bindkey -v 
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
