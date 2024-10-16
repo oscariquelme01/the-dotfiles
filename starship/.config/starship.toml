@@ -63,6 +63,7 @@ format = "[ $version]($style) "
 [nodejs]
 style = "green"
 format = "[ $version]($style) "
+disabled = true
 
 [status]
 disabled = false
