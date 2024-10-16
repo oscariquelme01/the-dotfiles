@@ -41,10 +41,10 @@ truncation_symbol = ""
 fish_style_pwd_dir_length = 1
 
 [gradle]
-format = "[  $version ]($style)"
+format = "[  $version ]($style)"
 
 [java]
-format = "[$symbol$version]($style)"
+format = "[ ☕$version]($style)"
 
 [cmd_duration]
 format = '[$duration]($style) '
@@ -68,3 +68,15 @@ format = "[ $version]($style) "
 [status]
 disabled = false
 symbol = '✘ '
+
+[custom.tmux]
+format = "[   Tmux]($style)"
+when = """
+if [ -z "$TMUX" ]; then
+    exit 1  # Return false (non-zero exit code)
+else
+    exit 0  # Return true (zero exit code)
+fi
+"""
+style = "bold cyan"
+disabled = false
