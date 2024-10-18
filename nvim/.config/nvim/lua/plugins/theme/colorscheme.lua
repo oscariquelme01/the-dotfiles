@@ -30,13 +30,17 @@ return {
       end,
       color_overrides = {
         all = {
-          base = '#161616',
-          mantle = '#161616',
-          crust = '#0C0C0C',
-          text = '#FFFFFF',
-          surface0 = '#3D3D3D',
-          surface1 = '#666666',
-          surface2 = '#B8B8B8',
+          base = '#1e2129',
+          mantle = '#181a21',
+          crust = '#181a21',
+          text = '#d3dae3',
+          surface1 = '#627a93',
+          yellow = '#e5c890',
+          blue = '#61afef',
+          lavender = '#1d99f3',
+          green = '#a6d189',
+          red = '#de6b74',
+          mauve = '#f488eF'
         },
       },
     }
