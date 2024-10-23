@@ -44,6 +44,9 @@ require("configuration")
 local theme_dir = gears.filesystem.get_configuration_dir() .. "theme/"
 beautiful.init(theme_dir .. "theme.lua")
 
+-- UI
+require("ui")
+
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -83,26 +86,6 @@ tag.connect_signal("request::default_layouts", function()
         awful.layout.suit.magnifier,
         awful.layout.suit.corner.nw,
     })
-end)
--- }}}
-
--- {{{ Wallpaper
-screen.connect_signal("request::wallpaper", function(s)
-    awful.wallpaper {
-        screen = s,
-        widget = {
-            {
-                image     = beautiful.wallpaper,
-                upscale   = true,
-                downscale = true,
-                widget    = wibox.widget.imagebox,
-            },
-            valign = "center",
-            halign = "center",
-            tiled  = false,
-            widget = wibox.container.tile,
-        }
-    }
 end)
 -- }}}
 
