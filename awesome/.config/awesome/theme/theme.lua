@@ -2,6 +2,7 @@ local theme = {}
 
 theme.font = "Roboto Medium 10"
 theme.icon_font = "Material Icon Round "
+theme.icon_theme = "custom-papyrus"
 
 --- Special
 theme.white = "#edeff0"
@@ -62,5 +63,6 @@ theme.fg_focus = theme.accent
 theme.fg_urgent = theme.color1
 theme.fg_minimize = theme.color0
 
-return theme
+theme.border_width = 1
 
+return theme
