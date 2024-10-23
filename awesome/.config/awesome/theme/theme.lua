@@ -64,5 +64,27 @@ theme.fg_urgent = theme.color1
 theme.fg_minimize = theme.color0
 
 theme.border_width = 1
+theme.border_color = theme.color8
+
+-- Window switcher
+theme.window_switcher_widget_bg = theme.lighter_black           -- The bg color of the widget
+theme.window_switcher_widget_border_width = 1                   -- The border width of the widget
+theme.window_switcher_widget_border_radius = 0                  -- The border radius of the widget
+theme.window_switcher_widget_border_color = theme.border_color  -- The border color of the widget
+theme.window_switcher_clients_spacing = 20                      -- The space between each client item
+theme.window_switcher_client_icon_horizontal_spacing = 5        -- The space between client icon and text
+theme.window_switcher_client_width = 150                        -- The width of one client widget
+theme.window_switcher_client_height = 250                       -- The height of one client widget
+theme.window_switcher_client_margins = 10                       -- The margin between the content and the border of the widget
+theme.window_switcher_thumbnail_margins = 10                    -- The margin between one client thumbnail and the rest of the widget
+theme.thumbnail_scale = true                                    -- If set to true, the thumbnails fit policy will be set to "fit" instead of "auto"
+theme.window_switcher_name_margins = 10                         -- The margin of one clients title to the rest of the widget
+theme.window_switcher_name_valign = "center"                    -- How to vertically align one clients title
+theme.window_switcher_name_forced_width = 200                   -- The width of one title
+theme.window_switcher_name_font = theme.font                     -- The font of all titles
+theme.window_switcher_name_normal_color = theme.white           -- The color of one title if the client is unfocused
+theme.window_switcher_name_focus_color = theme.color1              -- The color of one title if the client is focused
+theme.window_switcher_icon_valign = "center"                    -- How to vertically align the one icon
+theme.window_switcher_icon_width = 40                           -- The width of one icon
 
 return theme

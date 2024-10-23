@@ -96,6 +96,10 @@ local globalkeys = {
 		awful.screen.focus_relative(1)
 	end, { description = "focus the next screen", group = "screen" }),
 
+	awful.key({ modkey }, "d", function()
+		awesome.emit_signal("bling::window_switcher::turn_on")
+	end, { description = "open window switcher", group = "screen"}),
+
 	-- increase brightness
 	awful.key({ modkey }, ".", function()
 		awful.spawn.with_shell("light -A 2")
