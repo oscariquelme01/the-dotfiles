@@ -68,10 +68,12 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
+local bling = require("lib.bling")
 -- {{{ Tag layout
 -- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
+        bling.layout.equalarea,
         awful.layout.suit.tile,
         awful.layout.suit.floating,
         awful.layout.suit.tile.left,
