@@ -1,6 +1,3 @@
-import = [
-  "~/.config/alacritty/theme.toml"
-]
 
 [font]
 size = 14
@@ -36,3 +33,8 @@ mods = "Control"
 [scrolling]
 history = 10000
 multiplier = 3
+
+[general]
+import = [
+  "~/.config/alacritty/theme.toml"
+]
