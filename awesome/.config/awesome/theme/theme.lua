@@ -91,5 +91,10 @@ theme.window_switcher_icon_width = 40                           -- The width of 
 
 -- Titlebar
 theme.titlebar_close_button_normal = icons.closeClient
+theme.titlebar_close_button_normal_hover = icons.closeClientHover
+theme.titlebar_close_button_normal_press = icons.closeClientPress
+theme.titlebar_close_button_focus = icons.closeClient
+theme.titlebar_close_button_focus_hover = icons.closeClientHover
+theme.titlebar_close_button_focus_press = icons.closeClientPress
 
 return theme
