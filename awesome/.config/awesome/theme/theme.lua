@@ -1,5 +1,7 @@
 local theme = {}
 
+local icons = require("assets.icons")
+
 theme.font = "Roboto Medium 10"
 theme.icon_font = "Material Icon Round "
 theme.icon_theme = "custom-papyrus"
@@ -86,5 +88,8 @@ theme.window_switcher_name_normal_color = theme.white           -- The color of 
 theme.window_switcher_name_focus_color = theme.color1              -- The color of one title if the client is focused
 theme.window_switcher_icon_valign = "center"                    -- How to vertically align the one icon
 theme.window_switcher_icon_width = 40                           -- The width of one icon
+
+-- Titlebar
+theme.titlebar_close_button_normal = icons.closeClient
 
 return theme
