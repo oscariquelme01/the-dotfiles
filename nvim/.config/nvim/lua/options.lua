@@ -14,3 +14,4 @@ vim.o.splitbelow = true                -- Horizontal split below current buffer
 vim.o.splitright = true                -- Vertical split right to current buffer
 vim.o.tabstop = 4                      -- Tabstop default is 8 spaces...
 vim.o.shiftwidth = 4                   -- What the fuck are even these default setting on god
+vim.o.scrolloff = 3                    -- Lines to keep above or below the cursor when scrolling
