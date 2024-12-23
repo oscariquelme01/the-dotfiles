@@ -7,7 +7,7 @@ function install_servers(on_attach, capabilities)
         telemetry = { enable = false },
       },
     },
-    tsserver = { implicitProjectConfiguration = { checkJs = true } },
+    ts_ls = { implicitProjectConfiguration = { checkJs = true } },
   }
 
   -- Ensure the servers above are installed
