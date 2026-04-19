@@ -1,0 +1,5 @@
+--theme="ansi"
+--style="numbers,changes,header"
+--italic-text=always
+--map-syntax=".gitconfig:INI"
+--map-syntax="*.conf:INI"
