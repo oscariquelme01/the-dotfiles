@@ -1,71 +1,55 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# ---- Platform detection ----
+case "$OSTYPE" in
+    darwin*) IS_MAC=1 ;;
+    linux*)  IS_LINUX=1 ;;
+esac
+#
+# ---- Homebrew (macOS only) ----
+if [[ -n "$IS_MAC" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# Path to your oh-my-zsh installation.
+# ---- .oh-my-zsh (cross platform) ----
 export ZSH="$HOME/.oh-my-zsh"
-
-# Add .local/bin to path and insomnia
-export PATH="$PATH:$HOME/.local/bin:/opt/insomnia"
-
-# Move one word forwards or backswards
-bindkey '^[0c' forward-word
-bindkey '^[0d' backward-word
-
-plugins=(git sudo)
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# should probably be managed by oh-my-zsh
-source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
+# ---- PATH ----
+export PATH="$PATH:$HOME/.local/bin"
+
+# ---- nvm (paths differ per platform) ----
+export NVM_DIR="$HOME/.nvm"
+if [[ -n "$IS_MAC" ]]; then
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
+else
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi
+
+# ---- Keybindings ----
+bindkey '^[0c' forward-word
+bindkey '^[0d' backward-word
+bindkey -v 
+
+# ---- Aliases ----
 alias ls="lsd"
 alias v="nvim"
-alias fm="lfcd"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
-    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
-
-# zoxide
-eval "$(zoxide init zsh)"
-
-# drop into current dir when using lf
-LFCD="$HOME/.config/lf/lfcd.sh"
-if [ -f "$LFCD" ]; then
-    source "$LFCD"
-fi
-bindkey -s '^o' 'lfcd\n'
-
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # alias cat='bat'
 
-# Git diff for a specific commit
+# ---- Tools ----
+eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+export EDITOR="nvim"
+
+# Git diff for a specific commit (picked up by .gitconfig)
 gitchanged ()
 {
     git diff $1~ $1
 }
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-export EDITOR="nvim"
-
-# Alias for the dotfiles repo
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-
-# POWERLINE (starship)
-eval "$(starship init zsh)"
-
-# bun completions
-[ -s "/home/topi/.bun/_bun" ] && source "/home/topi/.bun/_bun"
-
-bindkey -v 
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "/home/topi/.bun/_bun" ] && source "/home/topi/.bun/_bun"
