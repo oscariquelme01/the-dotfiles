@@ -19,28 +19,6 @@ function M.apply(config)
 			mods = mod .. "|ALT",
 			action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 		},
-		-- h,j,k,l to navigate panes
-		-- {
-		-- 	key = "h",
-		-- 	mods = mod,
-		-- 	action = wezterm.action.ActivatePaneDirection("Left"),
-		-- },
-		-- {
-		-- 	key = "j",
-		-- 	mods = mod,
-		-- 	action = wezterm.action.ActivatePaneDirection("Down"),
-		-- },
-		-- {
-		-- 	key = "k",
-		-- 	mods = mod,
-		-- 	action = wezterm.action.ActivatePaneDirection("Up"),
-		-- },
-		-- {
-		-- 	key = "l",
-		-- 	mods = mod,
-		-- 	action = wezterm.action.ActivatePaneDirection("Right"),
-		-- },
-		-- Create a new workspace
 		{
 			key = "w",
 			mods = mod .. "|ALT",
@@ -52,6 +30,11 @@ function M.apply(config)
 					end
 				end),
 			}),
+		},
+		{
+			key = "t",
+			mods = mod,
+			action = wezterm.action.SpawnTab 'CurrentPaneDomain',
 		},
 		{
 			key = "t",
@@ -73,15 +56,9 @@ function M.apply(config)
 		},
 		-- Enter copy mode
 		{
-			key = "c",
+			key = "x",
 			mods = mod,
 			action = wezterm.action.ActivateCopyMode,
-		},
-		-- Enter quick select mode
-		{
-			key = "z",
-			mods = mod,
-			action = wezterm.action.QuickSelect,
 		},
 		-- Redo: forward as Ctrl+r to Neovim
 		{

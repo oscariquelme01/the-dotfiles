@@ -6,6 +6,8 @@ local M = {}
 
 M.mod = is_mac and "CMD" or "CTRL"
 
+M.is_mac = is_mac
+
 function M.add_keys(config, keys)
 	for _, k in ipairs(keys) do
 		table.insert(config.keys, k)
