@@ -1,0 +1,31 @@
+[includeIf "gitdir:~/masOrange/**"]
+    path = ~/.gitconfig-mas-orange
+
+[includeIf "gitdir:~/youShift/**"]
+    path = ~/.gitconfig-you-shift
+
+[user]
+	name = oscar
+	email = oscariquelmejato01@gmail.com
+
+[credential]
+	helper = store
+
+[alias]
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	lg = lg1
+[core]
+	pager = git-split-diffs --color | less -RFX
+[color]
+	ui = true
+[merge]
+	tool = nvim
+[mergetool "nvim"]
+	cmd = nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+	prompt = false
+[merge]
+    conflictStyle = zdiff3
+[split-diffs]
+	theme-directory = /home/topi/.config/git-split-diffs/themes/
+	theme-name = vesper
