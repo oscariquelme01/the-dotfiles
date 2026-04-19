@@ -26,7 +26,7 @@ No symlinks, no extra tooling.
 ### Quick way (bootstrap script)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/oscariquelme01/dotfiles/main/bootstrap.sh | bash
 ```
 
 The script clones the repo as bare into `~/.dotfiles`, backs up any conflicting files to `~/.dotfiles-backup/`, checks out everything into `$HOME`, and runs all one-time setup (see [What the bootstrap does](#what-the-bootstrap-does) below).
@@ -42,7 +42,7 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 If you'd rather do it by hand, clone as bare:
 
 ```bash
-git clone --bare git@github.com:YOUR_USERNAME/dotfiles.git $HOME/.dotfiles
+git clone --bare git@github.com:oscariquelme01/dotfiles.git $HOME/.dotfiles
 ```
 
 Add the alias to your shell rc file and reload:
@@ -125,7 +125,7 @@ dotfiles add .gitconfig
 dotfiles add .config/lazygit/config.yml
 dotfiles commit -m "Initial commit"
 
-dotfiles remote add origin git@github.com:YOUR_USERNAME/dotfiles.git
+dotfiles remote add origin git@github.com:oscariquelme01/dotfiles.git
 dotfiles branch -M main
 dotfiles push -u origin main
 ```
