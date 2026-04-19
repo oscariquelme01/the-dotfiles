@@ -89,9 +89,32 @@ Re-running it is safe — each step checks whether the work is already done.
 
 This repo tracks **configs**, not binaries. Install the tools themselves via your package manager:
 
-- **lazygit** — `brew install lazygit` (macOS) or `pacman -S lazygit` (Arch)
-- **git-split-diffs** — `npm install -g git-split-diffs`
-- **oh-my-zsh** — see [installation instructions](https://ohmyz.sh/#install)
+**Terminals & multiplexers**
+- [Alacritty](https://alacritty.org/) — `brew install --cask alacritty` (macOS) or `pacman -S alacritty` (Arch)
+- [WezTerm](https://wezterm.org/) — `brew install --cask wezterm` (macOS) or `pacman -S wezterm` (Arch)
+
+**Shell & prompt**
+- [zsh](https://www.zsh.org/) — preinstalled on macOS; `pacman -S zsh` (Arch)
+- [oh-my-zsh](https://ohmyz.sh/) — see [installation instructions](https://ohmyz.sh/#install)
+- [starship](https://starship.rs/) — `brew install starship` (macOS) or `pacman -S starship` (Arch)
+
+**Git tooling**
+- [lazygit](https://github.com/jesseduffield/lazygit) — `brew install lazygit` (macOS) or `pacman -S lazygit` (Arch)
+- [delta](https://github.com/dandavison/delta) — `brew install git-delta` (macOS) or `pacman -S git-delta` (Arch)
+- [git-split-diffs](https://github.com/banga/git-split-diffs) — `npm install -g git-split-diffs`
+
+**Editor**
+- [Neovim](https://neovim.io/) `v0.12.0+` — `brew install neovim` (macOS) or `pacman -S neovim` (Arch)
+
+**TUI enhancers**
+- [bat](https://github.com/sharkdp/bat) — `brew install bat` (macOS) or `pacman -S bat` (Arch)
+- [lsd](https://github.com/lsd-rs/lsd) — `brew install lsd` (macOS) or `pacman -S lsd` (Arch)
+- [zoxide](https://github.com/ajeetdsouza/zoxide) — `brew install zoxide` (macOS) or `pacman -S zoxide` (Arch)
+- [lf](https://github.com/gokcehan/lf) — `brew install lf` (macOS) or `pacman -S lf` (Arch)
+
+**Runtime managers**
+- [nvm](https://github.com/nvm-sh/nvm) — `brew install nvm` (macOS) or install via AUR/official script (Arch)
+- [bun](https://bun.sh/) — `curl -fsSL https://bun.sh/install | bash`
 
 ## Daily usage
 
