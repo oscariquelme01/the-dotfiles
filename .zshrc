@@ -1,3 +1,5 @@
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # ---- Platform detection ----
 case "$OSTYPE" in
     darwin*) IS_MAC=1 ;;
