@@ -1,0 +1,17 @@
+startgroup
+    animation_step 0
+
+    var float HIGHLIGHT_INTENSITY = 0
+    var float BORDER_WIDTH = 0
+
+    # how much of the original inactive pane remains
+    var float INACTIVE_DIM = 0.5
+
+    # crucial bit: don't touch the tab bar
+    var bool DIM_CENTRAL_AREA_ONLY = true
+
+    # keep padding/title areas belonging to the active pane undimmed too
+    var bool INCLUDE_WINDOW_PADDING = true
+
+    shaders focus-highlight
+endgroup
